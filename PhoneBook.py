@@ -203,4 +203,4 @@ while True:
             print("Incorect command!")
         print(phones)
     except ValueError as e:
-        print(e)
+        print(e)#print 1
