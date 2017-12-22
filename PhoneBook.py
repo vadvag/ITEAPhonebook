@@ -161,14 +161,14 @@ def createconfig(path):
     c = configparser.ConfigParser()
     c.add_section('settings')
     c.set('settings', 'file_type', 'csv')
-    with open(path,'wb') as f:
+    with open(path,'wt') as f:
         c.write(f)
 
 
 def initialise():
     import configparser
     import os
-    path = 'PhonesCNF'
+    path = '/home/pavlo72/ITEAPhonebook/PhonesCNF'
     if not os.path.exists(path):
         createconfig(path)
     c = configparser.ConfigParser()
