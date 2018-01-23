@@ -1,3 +1,4 @@
+from PHDB import PHBase
 def createrecord(phones,username,phonenum):
     """ testing createrecord function
     >>> phones = {}
@@ -168,18 +169,27 @@ def createconfig(path):
 def initialise():
     import configparser
     import os
-    path = '/home/pavlo72/ITEAPhonebook/PhonesCNF'
+    #path = '/home/pavlo72/ITEAPhonebook/PhonesCNF'
+    path = 'PhonesCNF'
     if not os.path.exists(path):
         createconfig(path)
     c = configparser.ConfigParser()
     c.read(path)
     return c.get('settings', 'file_type')
+
+
+
+
     
 
-typeformat = initialise()
-phones = mainread(typeformat)
-print(phones)
+#typeformat = initialise()
+#phones = mainread(typeformat)
+#print(phones)
+#pb = PHBase()
+pb = PHBase()
+
 while True:
+    
     username = input("Enter username: ")
     phonenumber = input("Enter phone number: ")
     print("Enter operation code: ")
@@ -187,20 +197,24 @@ while True:
     usercommand = input()
     try:
         if usercommand == "c":
-            createrecord(phones,username,phonenumber)
-            mainwrite(typeformat,phones)
+            #createrecord(phones,username,phonenumber)
+            #mainwrite(typeformat,phones)
+            pb.create(username, phonenumber)
         elif usercommand == "r":
-            readrecord(phones,username,phonenumber)
+            #readrecord(phones,username,phonenumber)
+            pb.read(username)
         elif usercommand == "u":
-            updaterecord(phones,username,phonenumber)
-            mainwrite(typeformat,phones)
+            #updaterecord(phones,username,phonenumber)
+            #mainwrite(typeformat,phones)
+            pb.update(username, phonenumber)
         elif usercommand == "d":
-            deleterecord(phones,username,phonenumber)
-            mainwrite(typeformat,phones)
+            #deleterecord(phones,username,phonenumber)
+            #mainwrite(typeformat,phones)
+            pb.delete(username)
         elif usercommand == "q":
             break
         else:
             print("Incorect command!")
-        print(phones)
+        #print(phones)
     except ValueError as e:
         print(e)#print 1
