@@ -1,8 +1,22 @@
 class PHBase():
     import sqlite3
-    db = sqlite3.connect('d:\\GIT\\PHB\\PhoneBook.sqlite')
+    DBNAME = 'PhoneBook.sqlite'
+    try:
+        fi = open(DBNAME,'rb')
+    except:
+        conn = sqlite3.connect(DBNAME)
+        c = conn.cursor()
+        c.execute("""CREATE TABLE PhoneBook
+                  (abon varchar primary key,
+                  phone varchar)""")
+        conn.commit()
+        c.close()
+        conn.close()
+    else:
+        fi.close()
+    db = sqlite3.connect(DBNAME)
     cursor = db.cursor()
-    
+
     def __init__(self):
         print('init')
 
@@ -12,7 +26,7 @@ class PHBase():
             self.db.commit()
         except:
             raise ValueError('%s alredy exist' % abon)
-   
+
     def read(self, abon):
         c1 = self.cursor.execute('select phone from PhoneBook where abon = ?', (abon,))
         res = c1.fetchone()
@@ -28,6 +42,3 @@ class PHBase():
     def delete(self, abon):
         self.cursor.execute('delete from PhoneBook where abon = ?',(abon,))
         self.db.commit()
-
-        
-
